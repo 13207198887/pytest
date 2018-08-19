@@ -60,9 +60,9 @@ def get_data(content):
 
 
 if __name__ == '__main__':
-    # page = get_page(1)
-    # get_xq_list(page)
-    # print(datas)
-    url = "http://bj.58.com/pingbandiannao/35087919512111x.shtml?psid=193865422201082203818325000&entinfo=35087919512111_0&iuType=p_1&PGTID=0d305a36-0000-1691-c485-402508468eab&ClickID=1"
-    content = requests.get(url, headers=headers).text
-    get_data(content)
+     page = get_page(1)
+     get_xq_list(page)
+     print(datas)
+   # url = "http://bj.58.com/pingbandiannao/35087919512111x.shtml?psid=193865422201082203818325000&entinfo=35087919512111_0&iuType=p_1&PGTID=0d305a36-0000-1691-c485-402508468eab&ClickID=1"
+   # content = requests.get(url, headers=headers).text
+   # get_data(content)
