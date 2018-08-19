@@ -1,8 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import time
 from multiprocessing import Pool
 import os
+import time
 
 '''
 在桌面上必须有个叫qq.txt的文件
@@ -88,3 +88,4 @@ get_qq()
 print('总记录数:{}'.format(len(src_qq)))
 pool.map(get_cookie, src_qq)
 print("失败了{}条".format(len(qq_disable)))
+pool.close()
