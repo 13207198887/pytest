@@ -4,6 +4,7 @@ import os
 from bs4 import BeautifulSoup
 from chromeDriver import Chrome
 from multiprocessing import Pool
+from mongo_driver import MongoDB
 from multiprocessing import Manager
 
 '''详情页面有反爬机制，只能用selenium来解决啦'''
@@ -21,6 +22,8 @@ item = {}
 path = os.path.join(os.path.expanduser("~"), "Desktop")
 mgr = Manager()
 url_list = mgr.list()
+'''获取mongo连接'''
+mongo = MongoDB()
 
 
 ## 获取url列表
@@ -66,6 +69,16 @@ def analysis_and_store_item(no):
         item['info'] = soup.select('.feature > ul > li:nth-of-type(1) > p')[0].text
         item['price'] = soup.select('#priceL > span')[0].text
         '''存数据库'''
+        store_item(item)
+
+
+def store_item(item):
+    client = mongo.get_client()
+    db = mongo.get_database(client, "mayi")
+    tb = mongo.get_table(db, "room")
+    if tb.find_one({'no': item['no']}) is None:
+        tb.insert_one(item)
+    client.close()
 
 
 # soup = BeautifulSoup(html, 'lxml')
@@ -101,4 +114,4 @@ pool = Pool()
 # pool.close()
 
 '''处理页面文件,抓取需要的数据'''
-analysis_and_store_item(nos[0])
+pool.map(analysis_and_store_item, nos)
